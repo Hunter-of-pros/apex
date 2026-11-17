@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Surface Tokens (Workstation Neutral Base) */
+  --bg-primary: #0c0e12;
+  --bg-secondary: #14171f;
+  --bg-tertiary: #1b202b;
+  --bg-elevated: #232938;
+  --bg-subtle: #10131a;
+
+  /* Hairline Border Tokens */
+  --border-subtle: #242a38;
+  --border-strong: #374154;
+  --border-focus: #3b82f6;
+
+  /* Typography Colors */
+  --text-primary: #f1f3f7;
+  --text-secondary: #9da6b8;
+  --text-muted: #626e85;
+  --text-inverse: #090a0d;
+
+  /* Single Interaction Accent (Surgical Cobalt) */
+  --accent-base: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-subtle: rgba(37, 99, 235, 0.14);
+
+  /* Accessible 4-Tier Urgency Palette */
+  --urgency-critical-fg: #f87171;
+  --urgency-critical-bg: rgba(239, 68, 68, 0.15);
+  --urgency-critical-border: #ef4444;
+
+  --urgency-high-fg: #fbbf24;
+  --urgency-high-bg: rgba(245, 158, 11, 0.15);
+  --urgency-high-border: #f59e0b;
+
+  --urgency-moderate-fg: #60a5fa;
+  --urgency-moderate-bg: rgba(37, 99, 235, 0.15);
+  --urgency-moderate-border: #3b82f6;
+
+  --urgency-routine-fg: #94a3b8;
+  --urgency-routine-bg: rgba(148, 163, 184, 0.12);
+  --urgency-routine-border: #64748b;
+
+  /* Quality & Degraded Input */
+  --quality-alert-fg: #e879f9;
+  --quality-alert-bg: rgba(217, 70, 239, 0.15);
+  --quality-alert-border: #d946ef;
+}
+
+/* Enforce tabular numerals across all numerical displays */
+* {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom discreet dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0e12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #242a38;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374154;
+}
+
+/* Subtle focus indicators */
+*:focus-visible {
+  outline: 1.5px solid var(--border-focus);
+  outline-offset: 1px;
+}

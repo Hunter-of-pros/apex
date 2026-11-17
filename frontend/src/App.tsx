@@ -55,10 +55,6 @@ export const App: React.FC = () => {
     }
   }, [selectedCaseId]);
 
-  useEffect(() => {
-    loadCases();
-  }, [loadCases]);
-
   // Load Single Case Detail
   const loadCaseDetail = useCallback(async (caseId: number) => {
     try {
@@ -100,9 +96,35 @@ export const App: React.FC = () => {
     }
   }, []);
 
+  // Sync URL query params on initial mount
+  useEffect(() => {
+    // Always load worklist cases so counts are accurate across all views
+    loadCases();
+
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view') as 'worklist' | 'case' | 'transparency' | 'audit' | null;
+    const idParam = params.get('id');
+
+    if (viewParam) {
+      setCurrentView(viewParam);
+      if (viewParam === 'transparency') loadTransparencyData();
+      if (viewParam === 'audit') loadAuditLogs();
+      if (viewParam === 'case' && idParam) {
+        loadCaseDetail(Number(idParam));
+      }
+    }
+  }, [loadCaseDetail, loadTransparencyData, loadAuditLogs, loadCases]);
+
   // Navigation Handler
   const handleNavigate = (view: 'worklist' | 'case' | 'transparency' | 'audit') => {
     setCurrentView(view);
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', view);
+    if (view !== 'case') {
+      url.searchParams.delete('id');
+    }
+    window.history.pushState({}, '', url.toString());
+
     if (view === 'transparency') loadTransparencyData();
     if (view === 'audit') loadAuditLogs();
     if (view === 'worklist') loadCases();
@@ -110,6 +132,10 @@ export const App: React.FC = () => {
 
   // Open Case
   const handleOpenCase = (c: CaseSummary) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'case');
+    url.searchParams.set('id', String(c.id));
+    window.history.pushState({}, '', url.toString());
     loadCaseDetail(c.id);
   };
 
@@ -191,14 +217,20 @@ export const App: React.FC = () => {
           />
         )}
 
-        {currentView === 'case' && activeCaseDetail && (
-          <CaseDetailView
-            caseData={activeCaseDetail}
-            onBack={() => setCurrentView('worklist')}
-            onNextCase={handleNextCase}
-            onPrevCase={handlePrevCase}
-            onRecordAction={handleRecordAction}
-          />
+        {currentView === 'case' && (
+          activeCaseDetail ? (
+            <CaseDetailView
+              caseData={activeCaseDetail}
+              onBack={() => handleNavigate('worklist')}
+              onNextCase={handleNextCase}
+              onPrevCase={handlePrevCase}
+              onRecordAction={handleRecordAction}
+            />
+          ) : (
+            <div className="flex-1 flex items-center justify-center bg-bg-primary font-mono text-xs text-text-muted">
+              Loading clinical study detail #{selectedCaseId}...
+            </div>
+          )
         )}
 
         {currentView === 'transparency' && (

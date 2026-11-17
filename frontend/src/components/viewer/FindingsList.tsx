@@ -68,7 +68,11 @@ export const FindingsList: React.FC<FindingsListProps> = ({ findings }) => {
               {/* Anatomical Locus and Clinical Rationale */}
               <div className="flex items-center justify-between text-2xs text-text-secondary font-mono mt-1">
                 <span className="text-text-muted truncate max-w-[260px]">
-                  {f.anatomic_locus || 'General thoracic field'}
+                  {f.anatomic_locus && f.anatomic_locus !== 'General thoracic field'
+                    ? f.anatomic_locus
+                    : f.shap_features && f.shap_features.length > 0
+                    ? 'Cardiovascular & Hemodynamic Axis'
+                    : 'Bilateral lung fields'}
                 </span>
                 <span className="text-[10px] text-text-muted">
                   Severity: {f.severity_weight.toFixed(2)}

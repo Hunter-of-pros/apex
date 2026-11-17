@@ -85,7 +85,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({
         <div className="flex items-center space-x-2">
           {caseData.clinical_history && (
             <span
-              className="text-text-muted font-sans text-2xs truncate max-w-[280px] hidden lg:inline-block"
+              className="text-text-muted font-sans text-2xs truncate max-w-[440px] xl:max-w-[560px] hidden md:inline-block"
               title={caseData.clinical_history}
             >
               Hx: {caseData.clinical_history}

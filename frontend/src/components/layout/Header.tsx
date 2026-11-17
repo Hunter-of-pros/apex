@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
         <span className="text-border-strong">/</span>
 
         <span className="text-2xs font-mono text-text-muted hidden md:inline-block">
-          WORKSTATION v1.0.4 • DUAL MODALITY
+          APEX HEALTHCARE • WORKSTATION v1.0.4 • DUAL MODALITY
         </span>
       </div>
 
